@@ -5,6 +5,7 @@ import br.edu.famapr.AppFamapr.dto.disciplina.DisciplinaResponseDTO;
 import br.edu.famapr.AppFamapr.model.Disciplina;
 import br.edu.famapr.AppFamapr.model.Periodo;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.Mapping;
 
 @Component
 public class DisciplinaMapper {
@@ -26,7 +27,10 @@ public class DisciplinaMapper {
         dto.setAbreviacao(disciplina.getAbreviacao());
         dto.setCargahoraria(disciplina.getCargahoraria());
         dto.setAulassemanais(disciplina.getAulassemanais());
-        dto.setPeriodoNome(disciplina.getPeriodo() != null ? disciplina.getPeriodo().getPeriodo() : null);
+        dto.setPeriodoId(
+                disciplina.getPeriodo() != null ? disciplina.getPeriodo().getId() : null
+        );
         return dto;
     }
+
 }

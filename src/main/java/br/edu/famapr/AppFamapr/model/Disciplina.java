@@ -29,6 +29,10 @@ public class Disciplina {
     @JsonIgnore
     private List<Matricula> matriculas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Pergunta> perguntas = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }
@@ -43,6 +47,14 @@ public class Disciplina {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
+    public void setPerguntas(List<Pergunta> perguntas) {
+        this.perguntas = perguntas;
     }
 
     public String getAbreviacao() {

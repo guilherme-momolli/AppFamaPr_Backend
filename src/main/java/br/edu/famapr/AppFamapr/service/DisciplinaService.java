@@ -37,6 +37,14 @@ public class DisciplinaService {
                 .map(DisciplinaMapper::toResponseDTO);
     }
 
+
+    public DisciplinaResponseDTO getDetalhesDisciplina(Integer id) {
+        Disciplina disciplina = disciplinaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Disciplina não encontrada"));
+
+        return DisciplinaMapper.toResponseDTO(disciplina);
+    }
+
     public DisciplinaResponseDTO create(DisciplinaRequestDTO dto) {
         Periodo periodo = periodoRepository.findById(dto.getPeriodoId())
                 .orElseThrow(() -> new RuntimeException("Período não encontrado"));
