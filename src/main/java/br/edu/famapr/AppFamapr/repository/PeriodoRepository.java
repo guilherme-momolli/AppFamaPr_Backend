@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PeriodoRepository extends JpaRepository<Periodo, Integer> {
-    Optional<Periodo> findById(Long id);
+    Optional<Periodo> findById(Integer id);
+
+    Optional<Periodo> findByCursoId(Integer id);
 }

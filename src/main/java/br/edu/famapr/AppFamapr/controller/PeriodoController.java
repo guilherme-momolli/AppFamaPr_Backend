@@ -1,59 +1,66 @@
 package br.edu.famapr.AppFamapr.controller;
 
+import br.edu.famapr.AppFamapr.dto.periodo.PeriodoRequestDTO;
+import br.edu.famapr.AppFamapr.dto.periodo.PeriodoResponseDTO;
 import br.edu.famapr.AppFamapr.model.Periodo;
 import br.edu.famapr.AppFamapr.repository.PeriodoRepository;
+import br.edu.famapr.AppFamapr.service.PeriodoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/periodos")
 @CrossOrigin(origins = "*")
 public class PeriodoController {
 
-    private final PeriodoRepository periodoRepository;
+    private final PeriodoService periodoService;
 
-    public PeriodoController(PeriodoRepository periodoRepository) {
-        this.periodoRepository = periodoRepository;
+    public PeriodoController(PeriodoService periodoService) {
+        this.periodoService = periodoService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Periodo>> listarTodos() {
-        return ResponseEntity.ok(periodoRepository.findAll());
+    @GetMapping("/list")
+    public ResponseEntity<List<PeriodoResponseDTO>> findAll() {
+        return ResponseEntity.ok(periodoService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Periodo> buscarPorId(@PathVariable Integer id) {
-        return periodoRepository.findById(id)
+    public ResponseEntity<PeriodoResponseDTO> findById(@PathVariable Integer id) {
+        return periodoService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/curso/{cursoId}")
+    public ResponseEntity<Optional<PeriodoResponseDTO>> findByCursoId(@PathVariable Integer cursoId) {
+        Optional<PeriodoResponseDTO> periodos = periodoService.findByCursoId(cursoId);
+        return periodos.isEmpty()
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(periodos);
+    }
+
     @PostMapping
-    public ResponseEntity<Periodo> criar(@RequestBody Periodo periodo) {
-        return ResponseEntity.ok(periodoRepository.save(periodo));
+    public ResponseEntity<PeriodoResponseDTO> create(@RequestBody PeriodoRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(periodoService.create(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Periodo> atualizar(@PathVariable Integer id, @RequestBody Periodo periodoAtualizado) {
-        return periodoRepository.findById(id)
-                .map(periodo -> {
-                    periodo.setPeriodo(periodoAtualizado.getPeriodo());
-                    periodo.setAbreviacao(periodoAtualizado.getAbreviacao());
-                    return ResponseEntity.ok(periodoRepository.save(periodo));
-                })
+    public ResponseEntity<PeriodoResponseDTO> update(@PathVariable Integer id,
+                                                     @RequestBody PeriodoRequestDTO dto) {
+        return periodoService.update(id, dto)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
-        return periodoRepository.findById(id)
-                .map(periodo -> {
-                    periodoRepository.delete(periodo);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        if (periodoService.delete(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
-

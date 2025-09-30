@@ -35,6 +35,10 @@ public class PeriodoService {
         return periodoRepository.findById(id).map(PeriodoMapper::toResponseDTO);
     }
 
+    public Optional<PeriodoResponseDTO> findByCursoId(Integer id) {
+        return periodoRepository.findByCursoId(id).map(PeriodoMapper::toResponseDTO);
+    }
+
     public PeriodoResponseDTO create(PeriodoRequestDTO dto) {
         Curso curso = cursoRepository.findById(dto.getCursoId())
                 .orElseThrow(() -> new RuntimeException("Curso não encontrado"));

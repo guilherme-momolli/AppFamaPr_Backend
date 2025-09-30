@@ -10,7 +10,7 @@ public class PeriodoResponseDTO {
     private Integer id;
     private String periodo;
     private Integer abreviacao;
-    private String cursoNome;
+    private Integer cursoId;
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class PeriodoResponseDTO {
         this.abreviacao = abreviacao;
     }
 
-    public String getCursoNome() {
-        return cursoNome;
+    public Integer getCursoId() {
+        return cursoId;
     }
 
-    public void setCursoNome(String cursoNome) {
-        this.cursoNome = cursoNome;
+    public void setCursoId(Integer cursoId) {
+        this.cursoId = cursoId;
     }
 }

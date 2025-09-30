@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PeriodoMapper {
 
+    private final CursoMapper cursoMapper;
+
+    public PeriodoMapper(CursoMapper cursoMapper) {
+        this.cursoMapper = cursoMapper;
+    }
+
     public static Periodo toEntity(PeriodoRequestDTO dto, Curso curso) {
         Periodo periodo = new Periodo();
         periodo.setPeriodo(dto.getPeriodo());
@@ -22,7 +28,7 @@ public class PeriodoMapper {
         dto.setId(periodo.getId());
         dto.setPeriodo(periodo.getPeriodo());
         dto.setAbreviacao(periodo.getAbreviacao());
-        dto.setCursoNome(periodo.getCurso() != null ? periodo.getCurso().getNome() : null);
+        dto.setCursoId(periodo.getCurso() != null ? periodo.getCurso().getId() : null);
         return dto;
     }
 }
