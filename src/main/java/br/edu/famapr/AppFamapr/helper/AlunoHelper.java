@@ -16,10 +16,5 @@ public class AlunoHelper {
         this.alunoService = alunoService;
     }
 
-//    public Aluno resolveAluno(AlunoRequestDTO aluno){
-//        if (aluno == null) return null;
-//        return aluno.getId() == null
-//                    ? alunoService.create(aluno)
-//                    : alunoService.findById(aluno.getId());
-//    }
+
 }
