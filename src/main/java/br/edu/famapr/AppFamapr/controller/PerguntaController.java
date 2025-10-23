@@ -25,19 +25,19 @@ public class PerguntaController {
         return ResponseEntity.ok(perguntaService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<PerguntaResponseDTO> findById(@PathVariable Integer id) {
         return perguntaService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<PerguntaResponseDTO> create(@RequestBody PerguntaRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(perguntaService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<PerguntaResponseDTO> update(@PathVariable Integer id,
                                                       @RequestBody PerguntaRequestDTO dto) {
         return perguntaService.update(id, dto)
@@ -45,7 +45,7 @@ public class PerguntaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (perguntaService.delete(id)) {
             return ResponseEntity.noContent().build();

@@ -28,7 +28,7 @@ public class PeriodoController {
         return ResponseEntity.ok(periodoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<PeriodoResponseDTO> findById(@PathVariable Integer id) {
         return periodoService.findById(id)
                 .map(ResponseEntity::ok)
@@ -43,12 +43,12 @@ public class PeriodoController {
                 : ResponseEntity.ok(periodos);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<PeriodoResponseDTO> create(@RequestBody PeriodoRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(periodoService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<PeriodoResponseDTO> update(@PathVariable Integer id,
                                                      @RequestBody PeriodoRequestDTO dto) {
         return periodoService.update(id, dto)
@@ -56,7 +56,7 @@ public class PeriodoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (periodoService.delete(id)) {
             return ResponseEntity.noContent().build();

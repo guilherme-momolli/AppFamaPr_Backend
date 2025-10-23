@@ -25,19 +25,19 @@ public class AvaliacaoController {
         return ResponseEntity.ok(avaliacaoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<AvaliacaoResponseDTO> findById(@PathVariable Integer id) {
         return avaliacaoService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/crate")
     public ResponseEntity<AvaliacaoResponseDTO> create(@RequestBody AvaliacaoRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<AvaliacaoResponseDTO> update(@PathVariable Integer id,
                                                        @RequestBody AvaliacaoRequestDTO dto) {
         return avaliacaoService.update(id, dto)
@@ -45,7 +45,7 @@ public class AvaliacaoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (avaliacaoService.delete(id)) {
             return ResponseEntity.noContent().build();

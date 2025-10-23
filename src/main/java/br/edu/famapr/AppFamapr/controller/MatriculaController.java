@@ -18,24 +18,24 @@ public class MatriculaController {
         this.matriculaRepository = matriculaRepository;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<Matricula>> listarTodos() {
         return ResponseEntity.ok(matriculaRepository.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<Matricula> buscarPorId(@PathVariable Integer id) {
         return matriculaRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Matricula> criar(@RequestBody Matricula matricula) {
         return ResponseEntity.ok(matriculaRepository.save(matricula));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Matricula> atualizar(@PathVariable Integer id, @RequestBody Matricula matriculaAtualizada) {
         return matriculaRepository.findById(id)
                 .map(matricula -> {
@@ -47,7 +47,7 @@ public class MatriculaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         return matriculaRepository.findById(id)
                 .map(matricula -> {

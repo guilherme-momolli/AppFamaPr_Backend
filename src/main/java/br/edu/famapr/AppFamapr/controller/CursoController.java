@@ -24,28 +24,28 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<CursoResponseDTO>> findAll() {
         return ResponseEntity.ok(cursoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<CursoResponseDTO> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(cursoService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CursoResponseDTO> create(@RequestBody CursoRequestDTO dto) {
         return ResponseEntity.ok(cursoService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<CursoResponseDTO> update(@PathVariable Integer id,
                                                    @RequestBody CursoRequestDTO dto) {
         return ResponseEntity.ok(cursoService.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         cursoService.delete(id);
         return ResponseEntity.noContent().build();

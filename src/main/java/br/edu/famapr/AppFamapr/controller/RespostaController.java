@@ -26,19 +26,19 @@ public class RespostaController {
         return ResponseEntity.ok(respostaService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<RespostaResponseDTO> findById(@PathVariable Integer id) {
         return respostaService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<RespostaResponseDTO> create(@RequestBody RespostaRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(respostaService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<RespostaResponseDTO> update(@PathVariable Integer id,
                                                       @RequestBody RespostaRequestDTO dto) {
         return respostaService.update(id, dto)
@@ -46,7 +46,7 @@ public class RespostaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (respostaService.delete(id)) {
             return ResponseEntity.noContent().build();

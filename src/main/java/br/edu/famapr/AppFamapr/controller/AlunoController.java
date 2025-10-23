@@ -28,19 +28,19 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<AlunoResponseDTO> findById(@PathVariable Integer id) {
         return alunoService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<AlunoResponseDTO> create(@RequestBody AlunoRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(alunoService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<AlunoResponseDTO> update(@PathVariable Integer id,
                                                    @RequestBody AlunoRequestDTO dto) {
         return alunoService.update(id, dto)
@@ -48,7 +48,7 @@ public class AlunoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (alunoService.delete(id)) {
             return ResponseEntity.noContent().build();

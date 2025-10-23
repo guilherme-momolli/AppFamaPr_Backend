@@ -27,7 +27,7 @@ public class DisciplinaController {
         return ResponseEntity.ok(disciplinaService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<DisciplinaResponseDTO> findById(@PathVariable Integer id) {
         return disciplinaService.findById(id)
                 .map(ResponseEntity::ok)
@@ -39,12 +39,12 @@ public class DisciplinaController {
         return ResponseEntity.ok(disciplinaService.getDetalhesDisciplina(id));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<DisciplinaResponseDTO> create(@RequestBody DisciplinaRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<DisciplinaResponseDTO> update(@PathVariable Integer id,
                                                         @RequestBody DisciplinaRequestDTO dto) {
         return disciplinaService.update(id, dto)
@@ -52,7 +52,7 @@ public class DisciplinaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (disciplinaService.delete(id)) {
             return ResponseEntity.noContent().build();
