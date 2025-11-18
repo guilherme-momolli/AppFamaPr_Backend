@@ -13,25 +13,34 @@ public class Disciplina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false, length = 100)
     private String nome;
 
+    @Column(length = 10)
     private String abreviacao;
 
-    private Integer cargahoraria;
+    @Column(name = "carga_horaria", nullable = false)
+    private Integer cargaHoraria;
 
-    private Integer aulassemanais;
+    @Column(name = "aulas_semanais", nullable = false)
+    private Integer aulasSemanais;
 
     @ManyToOne
-    @JoinColumn(name = "periodos_id", nullable = false)
+    @JoinColumn(name = "periodo_id", nullable = false)
     private Periodo periodo;
 
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Matricula> matriculas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Pergunta> perguntas = new ArrayList<>();
+    public Disciplina() {
+    }
+
+    public Disciplina(Integer id, String nome, String abreviacao, Integer cargaHoraria, Integer aulasSemanais, Periodo periodo) {
+        this.id = id;
+        this.nome = nome;
+        this.abreviacao = abreviacao;
+        this.cargaHoraria = cargaHoraria;
+        this.aulasSemanais = aulasSemanais;
+        this.periodo = periodo;
+    }
 
     public Integer getId() {
         return id;
@@ -49,14 +58,6 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public List<Pergunta> getPerguntas() {
-        return perguntas;
-    }
-
-    public void setPerguntas(List<Pergunta> perguntas) {
-        this.perguntas = perguntas;
-    }
-
     public String getAbreviacao() {
         return abreviacao;
     }
@@ -65,20 +66,20 @@ public class Disciplina {
         this.abreviacao = abreviacao;
     }
 
-    public Integer getCargahoraria() {
-        return cargahoraria;
+    public Integer getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public void setCargahoraria(Integer cargahoraria) {
-        this.cargahoraria = cargahoraria;
+    public void setCargaHoraria(Integer cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 
-    public Integer getAulassemanais() {
-        return aulassemanais;
+    public Integer getAulasSemanais() {
+        return aulasSemanais;
     }
 
-    public void setAulassemanais(Integer aulassemanais) {
-        this.aulassemanais = aulassemanais;
+    public void setAulasSemanais(Integer aulasSemanais) {
+        this.aulasSemanais = aulasSemanais;
     }
 
     public Periodo getPeriodo() {
@@ -87,14 +88,5 @@ public class Disciplina {
 
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;
-    }
-
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    @JsonIgnore
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
     }
 }

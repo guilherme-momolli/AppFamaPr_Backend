@@ -33,6 +33,10 @@ public class Aluno {
     @JsonIgnore
     private List<Matricula> matriculas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<AvaliacaoResposta> respostas = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }

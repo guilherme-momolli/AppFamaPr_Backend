@@ -9,6 +9,7 @@ import br.edu.famapr.AppFamapr.model.Resposta;
 import br.edu.famapr.AppFamapr.repository.AvaliacaoRepository;
 import br.edu.famapr.AppFamapr.repository.PerguntaRepository;
 import br.edu.famapr.AppFamapr.repository.RespostaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,72 +19,47 @@ import java.util.stream.Collectors;
 @Service
 public class RespostaService {
 
-    private final RespostaRepository respostaRepository;
-    private final AvaliacaoRepository avaliacaoRepository;
-    private final PerguntaRepository perguntaRepository;
-    private final RespostaMapper respostaMapper;
+    @Autowired
+    private RespostaRepository respostaRepository;
 
-    public RespostaService(RespostaRepository respostaRepository,
-                           AvaliacaoRepository avaliacaoRepository,
-                           PerguntaRepository perguntaRepository,
-                           RespostaMapper respostaMapper) {
-        this.respostaRepository = respostaRepository;
-        this.avaliacaoRepository = avaliacaoRepository;
-        this.perguntaRepository = perguntaRepository;
-        this.respostaMapper = respostaMapper;
+    @Autowired
+    private PerguntaRepository perguntaRepository;
+
+    public RespostaResponseDTO create(RespostaRequestDTO dto) {
+        Pergunta pergunta = perguntaRepository.findById(dto.getPerguntaId())
+                .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
+        Resposta resposta = RespostaMapper.toEntity(dto, pergunta);
+        return RespostaMapper.toResponseDTO(respostaRepository.save(resposta));
     }
 
     public List<RespostaResponseDTO> findAll() {
-        return respostaRepository.findAll()
-                .stream()
+        return respostaRepository.findAll().stream()
                 .map(RespostaMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<RespostaResponseDTO> findById(Integer id) {
-        return respostaRepository.findById(id)
-                .map(RespostaMapper::toResponseDTO);
+    public RespostaResponseDTO findById(Integer id) {
+        Resposta resposta = respostaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resposta não encontrada"));
+        return RespostaMapper.toResponseDTO(resposta);
     }
 
-    public RespostaResponseDTO create(RespostaRequestDTO dto) {
-        Avaliacao avaliacao = avaliacaoRepository.findById(dto.getAvaliacaoId())
-                .orElseThrow(() -> new RuntimeException("Avaliação não encontrada"));
-
+    public RespostaResponseDTO update(Integer id, RespostaRequestDTO dto) {
+        Resposta resposta = respostaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resposta não encontrada"));
         Pergunta pergunta = perguntaRepository.findById(dto.getPerguntaId())
                 .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
 
-        Resposta resposta = RespostaMapper.toEntity(dto, avaliacao, pergunta);
+        resposta.setPergunta(pergunta);
+        resposta.setRespostaNumero(dto.getRespostaNumero());
+        resposta.setRespostaTexto(dto.getRespostaTexto());
 
-        return respostaMapper.toResponseDTO(respostaRepository.save(resposta));
+        return RespostaMapper.toResponseDTO(respostaRepository.save(resposta));
     }
 
-    public Optional<RespostaResponseDTO> update(Integer id, RespostaRequestDTO dto) {
-        return respostaRepository.findById(id).map(existing -> {
-            existing.setRespostaNumero(dto.getRespostaNumero());
-            existing.setRespostaTexto(dto.getRespostaTexto());
-
-            if (dto.getAvaliacaoId() != null) {
-                Avaliacao avaliacao = avaliacaoRepository.findById(dto.getAvaliacaoId())
-                        .orElseThrow(() -> new RuntimeException("Avaliação não encontrada"));
-                existing.setAvaliacao(avaliacao);
-            }
-
-            if (dto.getPerguntaId() != null) {
-                Pergunta pergunta = perguntaRepository.findById(dto.getPerguntaId())
-                        .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
-                existing.setPergunta(pergunta);
-            }
-
-            Resposta atualizado = respostaRepository.save(existing);
-            return respostaMapper.toResponseDTO(atualizado);
-        });
-    }
-
-    public boolean delete(Integer id) {
-        if (respostaRepository.existsById(id)) {
-            respostaRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void delete(Integer id) {
+        Resposta resposta = respostaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resposta não encontrada"));
+        respostaRepository.delete(resposta);
     }
 }

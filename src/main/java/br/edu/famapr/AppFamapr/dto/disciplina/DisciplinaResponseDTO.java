@@ -11,25 +11,28 @@ public class DisciplinaResponseDTO {
     private Integer id;
     private String nome;
     private String abreviacao;
-    private Integer cargahoraria;
-    private Integer aulassemanais;
+    private Integer cargaHoraria;
+    private Integer aulasSemanais;
     private Integer periodoId;
-    private List<AlunoResponseDTO> alunos;
-    private List<PerguntaResponseDTO> perguntas;
+    private String periodoNome;
 
+    public DisciplinaResponseDTO() {
+    }
 
-    public DisciplinaResponseDTO(Integer id, String nome, String abreviacao, Integer cargahoraria, Integer aulassemanais, Integer periodoId, List<AlunoResponseDTO> alunos, List<PerguntaResponseDTO> perguntas) {
+    public DisciplinaResponseDTO(Integer id,
+                                 String nome,
+                                 String abreviacao,
+                                 Integer cargaHoraria,
+                                 Integer aulasSemanais,
+                                 Integer periodoId,
+                                 String periodoNome) {
         this.id = id;
         this.nome = nome;
         this.abreviacao = abreviacao;
-        this.cargahoraria = cargahoraria;
-        this.aulassemanais = aulassemanais;
+        this.cargaHoraria = cargaHoraria;
+        this.aulasSemanais = aulasSemanais;
         this.periodoId = periodoId;
-        this.alunos = alunos;
-        this.perguntas = perguntas;
-    }
-
-    public DisciplinaResponseDTO() {
+        this.periodoNome = periodoNome;
     }
 
     public Integer getId() {
@@ -56,20 +59,20 @@ public class DisciplinaResponseDTO {
         this.abreviacao = abreviacao;
     }
 
-    public Integer getCargahoraria() {
-        return cargahoraria;
+    public Integer getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public void setCargahoraria(Integer cargahoraria) {
-        this.cargahoraria = cargahoraria;
+    public void setCargaHoraria(Integer cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 
-    public Integer getAulassemanais() {
-        return aulassemanais;
+    public Integer getAulasSemanais() {
+        return aulasSemanais;
     }
 
-    public void setAulassemanais(Integer aulassemanais) {
-        this.aulassemanais = aulassemanais;
+    public void setAulasSemanais(Integer aulasSemanais) {
+        this.aulasSemanais = aulasSemanais;
     }
 
     public Integer getPeriodoId() {
@@ -80,19 +83,11 @@ public class DisciplinaResponseDTO {
         this.periodoId = periodoId;
     }
 
-    public List<AlunoResponseDTO> getAlunos() {
-        return alunos;
+    public String getPeriodoNome() {
+        return periodoNome;
     }
 
-    public void setAlunos(List<AlunoResponseDTO> alunos) {
-        this.alunos = alunos;
-    }
-
-    public List<PerguntaResponseDTO> getPerguntas() {
-        return perguntas;
-    }
-
-    public void setPerguntas(List<PerguntaResponseDTO> perguntas) {
-        this.perguntas = perguntas;
+    public void setPeriodoNome(String periodoNome) {
+        this.periodoNome = periodoNome;
     }
 }

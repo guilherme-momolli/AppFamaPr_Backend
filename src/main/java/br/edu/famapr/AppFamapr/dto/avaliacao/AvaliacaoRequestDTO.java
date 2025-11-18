@@ -1,34 +1,33 @@
 package br.edu.famapr.AppFamapr.dto.avaliacao;
 
-import java.time.LocalDateTime;
+import br.edu.famapr.AppFamapr.dto.avaliacao_pergunta.AvaliacaoPerguntaRequestDTO;
+import br.edu.famapr.AppFamapr.enums.avaliacao.TipoAvaliacao;
+
+import java.util.List;
+
 
 public class AvaliacaoRequestDTO {
 
-    private LocalDateTime dataAvaliacao;
     private Integer matriculaId;
+    private TipoAvaliacao tipoAvaliacao;
+    private List<AvaliacaoPerguntaRequestDTO> perguntas;
 
     public AvaliacaoRequestDTO() {}
 
-    public AvaliacaoRequestDTO(LocalDateTime dataAvaliacao, Integer matriculaId) {
-        this.dataAvaliacao = dataAvaliacao;
+    public AvaliacaoRequestDTO(Integer matriculaId,
+                               TipoAvaliacao tipoAvaliacao,
+                               List<AvaliacaoPerguntaRequestDTO> perguntas) {
         this.matriculaId = matriculaId;
+        this.tipoAvaliacao = tipoAvaliacao;
+        this.perguntas = perguntas;
     }
 
-    public LocalDateTime getDataAvaliacao() {
-        return dataAvaliacao;
-    }
+    public Integer getMatriculaId() { return matriculaId; }
+    public void setMatriculaId(Integer matriculaId) { this.matriculaId = matriculaId; }
 
-    public void setDataAvaliacao(LocalDateTime dataAvaliacao) {
-        this.dataAvaliacao = dataAvaliacao;
-    }
+    public TipoAvaliacao getTipoAvaliacao() { return tipoAvaliacao; }
+    public void setTipoAvaliacao(TipoAvaliacao tipoAvaliacao) { this.tipoAvaliacao = tipoAvaliacao; }
 
-    public Integer getMatriculaId() {
-        return matriculaId;
-    }
-
-    public void setMatriculaId(Integer matriculaId) {
-        this.matriculaId = matriculaId;
-    }
-
-
+    public List<AvaliacaoPerguntaRequestDTO> getPerguntas() { return perguntas; }
+    public void setPerguntas(List<AvaliacaoPerguntaRequestDTO> perguntas) { this.perguntas = perguntas; }
 }

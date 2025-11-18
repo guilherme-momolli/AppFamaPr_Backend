@@ -2,8 +2,10 @@ package br.edu.famapr.AppFamapr.model;
 
 import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "resposata")
+@Table(name = "respostas")
 public class Resposta {
 
     @Id
@@ -11,32 +13,34 @@ public class Resposta {
     private Integer id;
 
     @Column(name = "resposta_numero")
-    private int respostaNumero;
+    private Integer respostaNumero;
 
-    @Column(name = "resposta_texto")
+    @Column(name = "resposta_texto", nullable = false, length = 255)
     private String respostaTexto;
 
-    @ManyToOne
-    @JoinColumn(name = "avaliacoes_id", nullable = false)
-    private Avaliacao avaliacao;
-
-    @JoinColumn(name = "perguntas_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pergunta_id", nullable = false)
     private Pergunta pergunta;
+
+    public Resposta(Integer id, Integer respostaNumero, String respostaTexto, Pergunta pergunta) {
+        this.id = id;
+        this.respostaNumero = respostaNumero;
+        this.respostaTexto = respostaTexto;
+        this.pergunta = pergunta;
+    }
+
+    public Resposta() {
+    }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public int getRespostaNumero() {
+    public Integer getRespostaNumero() {
         return respostaNumero;
     }
 
-    public void setRespostaNumero(int respostaNumero) {
+    public void setRespostaNumero(Integer respostaNumero) {
         this.respostaNumero = respostaNumero;
     }
 
@@ -48,14 +52,6 @@ public class Resposta {
         this.respostaTexto = respostaTexto;
     }
 
-    public Avaliacao getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(Avaliacao avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
     public Pergunta getPergunta() {
         return pergunta;
     }
@@ -64,3 +60,4 @@ public class Resposta {
         this.pergunta = pergunta;
     }
 }
+

@@ -18,7 +18,13 @@ public class AlunoResponseDTO {
     public AlunoResponseDTO() {
     }
 
-    public AlunoResponseDTO(Integer id, String nome, String cpf, String sexo, LocalDate datanasc, String telefone, String email) {
+    public AlunoResponseDTO(Integer id,
+                            String nome,
+                            String cpf,
+                            String sexo,
+                            LocalDate datanasc,
+                            String telefone,
+                            String email) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;

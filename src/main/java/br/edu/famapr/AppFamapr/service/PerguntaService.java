@@ -3,8 +3,10 @@ package br.edu.famapr.AppFamapr.service;
 import br.edu.famapr.AppFamapr.dto.pergunta.PerguntaRequestDTO;
 import br.edu.famapr.AppFamapr.dto.pergunta.PerguntaResponseDTO;
 import br.edu.famapr.AppFamapr.mapper.PerguntaMapper;
+import br.edu.famapr.AppFamapr.model.Avaliacao;
 import br.edu.famapr.AppFamapr.model.Disciplina;
 import br.edu.famapr.AppFamapr.model.Pergunta;
+import br.edu.famapr.AppFamapr.repository.AvaliacaoRepository;
 import br.edu.famapr.AppFamapr.repository.DisciplinaRepository;
 import br.edu.famapr.AppFamapr.repository.PerguntaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,48 +20,45 @@ import java.util.stream.Collectors;
 public class PerguntaService {
 
     @Autowired
-    private final PerguntaRepository perguntaRepository;
-    private final DisciplinaRepository disciplinaRepository;
-    private final PerguntaMapper perguntaMapper;
+    private PerguntaRepository perguntaRepository;
 
-    public PerguntaService(PerguntaRepository perguntaRepository, DisciplinaRepository disciplinaRepository, PerguntaMapper perguntaMapper) {
-        this.perguntaRepository = perguntaRepository;
-        this.disciplinaRepository = disciplinaRepository;
-        this.perguntaMapper = perguntaMapper;
+    @Autowired
+    private AvaliacaoRepository avaliacaoRepository;
+
+    public PerguntaResponseDTO create(PerguntaRequestDTO dto) {
+        Avaliacao avaliacao = avaliacaoRepository.findById(dto.getAvaliacaoId())
+                .orElseThrow(() -> new RuntimeException("Avaliação não encontrada"));
+        Pergunta pergunta = PerguntaMapper.toEntity(dto, avaliacao);
+        return PerguntaMapper.toResponseDTO(perguntaRepository.save(pergunta));
     }
 
     public List<PerguntaResponseDTO> findAll() {
-        return perguntaRepository.findAll()
-                .stream()
+        return perguntaRepository.findAll().stream()
                 .map(PerguntaMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PerguntaResponseDTO> findById(Integer id) {
-        return perguntaRepository.findById(id).map(PerguntaMapper::toResponseDTO);
+    public PerguntaResponseDTO findById(Integer id) {
+        Pergunta pergunta = perguntaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
+        return PerguntaMapper.toResponseDTO(pergunta);
     }
 
-    public PerguntaResponseDTO create(PerguntaRequestDTO dto) {
-        Disciplina disciplina = disciplinaRepository.findById(dto.getDisciplinaId())
-                .orElseThrow(() -> new RuntimeException("Disciplina não encontrada"));
+    public PerguntaResponseDTO update(Integer id, PerguntaRequestDTO dto) {
+        Pergunta pergunta = perguntaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
+        Avaliacao avaliacao = avaliacaoRepository.findById(dto.getAvaliacaoId())
+                .orElseThrow(() -> new RuntimeException("Avaliação não encontrada"));
 
-        Pergunta pergunta = PerguntaMapper.toEntity(dto, disciplina);
+        pergunta.setTitulo(dto.getTitulo());
+        pergunta.setAvaliacao(avaliacao);
 
-        return perguntaMapper.toResponseDTO(perguntaRepository.save(pergunta));
+        return PerguntaMapper.toResponseDTO(perguntaRepository.save(pergunta));
     }
 
-    public Optional<PerguntaResponseDTO> update(Integer id, PerguntaRequestDTO dto) {
-        return perguntaRepository.findById(id).map(existing -> {
-            existing.setTitulo(dto.getTitulo());
-            return perguntaMapper.toResponseDTO(perguntaRepository.save(existing));
-        });
-    }
-
-    public boolean delete(Integer id) {
-        if (perguntaRepository.existsById(id)) {
-            perguntaRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void delete(Integer id) {
+        Pergunta pergunta = perguntaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
+        perguntaRepository.delete(pergunta);
     }
 }

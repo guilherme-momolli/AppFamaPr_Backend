@@ -34,11 +34,6 @@ public class DisciplinaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{id}/detalhes")
-    public ResponseEntity<DisciplinaResponseDTO> getDetalhesDisciplina(@PathVariable Integer id) {
-        return ResponseEntity.ok(disciplinaService.getDetalhesDisciplina(id));
-    }
-
     @PostMapping("/create")
     public ResponseEntity<DisciplinaResponseDTO> create(@RequestBody DisciplinaRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(disciplinaService.create(dto));

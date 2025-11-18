@@ -60,8 +60,7 @@ public class DisciplinaService {
 
             disciplina.setNome(dto.getNome());
             disciplina.setAbreviacao(dto.getAbreviacao());
-            disciplina.setCargahoraria(dto.getCargahoraria());
-            disciplina.setAulassemanais(dto.getAulassemanais());
+
             disciplina.setPeriodo(periodo);
 
             return DisciplinaMapper.toResponseDTO(disciplinaRepository.save(disciplina));

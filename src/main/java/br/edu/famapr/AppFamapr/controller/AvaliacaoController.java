@@ -27,29 +27,24 @@ public class AvaliacaoController {
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<AvaliacaoResponseDTO> findById(@PathVariable Integer id) {
-        return avaliacaoService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(avaliacaoService.findById(id));
     }
 
-    @PostMapping("/crate")
+    @PostMapping("/create")
     public ResponseEntity<AvaliacaoResponseDTO> create(@RequestBody AvaliacaoRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(avaliacaoService.create(dto));
+        AvaliacaoResponseDTO saved = avaliacaoService.create(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AvaliacaoResponseDTO> update(@PathVariable Integer id,
                                                        @RequestBody AvaliacaoRequestDTO dto) {
-        return avaliacaoService.update(id, dto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.status(HttpStatus.OK).body(avaliacaoService.update(id, dto));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (avaliacaoService.delete(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        avaliacaoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

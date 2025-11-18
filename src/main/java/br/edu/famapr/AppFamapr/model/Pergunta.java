@@ -2,6 +2,9 @@ package br.edu.famapr.AppFamapr.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "perguntas")
 public class Pergunta {
@@ -12,16 +15,29 @@ public class Pergunta {
 
     private String titulo;
 
-    @ManyToOne
-    @JoinColumn(name = "disciplinas_id", nullable = false)
-    private Disciplina disciplina;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "avaliacao_id", nullable = false)
+    private Avaliacao avaliacao;
+
+    @OneToMany(mappedBy = "pergunta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resposta> respostas = new ArrayList<>();
+
+    public Pergunta() {
+    }
+
+    public Pergunta(Integer id,
+                    String titulo,
+                    Avaliacao avaliacao,
+                    List<Resposta> respostas
+    ) {
+        this.id = id;
+        this.titulo = titulo;
+        this.avaliacao = avaliacao;
+        this.respostas = respostas;
+    }
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitulo() {
@@ -32,11 +48,19 @@ public class Pergunta {
         this.titulo = titulo;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
+    public Avaliacao getAvaliacao() {
+        return avaliacao;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void setAvaliacao(Avaliacao avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+    public List<Resposta> getRespostas() {
+        return respostas;
+    }
+
+    public void setRespostas(List<Resposta> respostas) {
+        this.respostas = respostas;
     }
 }

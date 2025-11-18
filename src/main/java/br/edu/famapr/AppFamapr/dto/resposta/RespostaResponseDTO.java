@@ -4,17 +4,18 @@ public class RespostaResponseDTO {
 
     private Integer id;
     private Integer respostaNumero;
-    private String respostaTexto;
-    private Integer avaliacaoId;
+    private String  respostaTexto;
     private Integer perguntaId;
 
     public RespostaResponseDTO() {}
 
-    public RespostaResponseDTO(Integer id, Integer respostaNumero, String respostaTexto, Integer avaliacaoId, Integer perguntaId) {
+    public RespostaResponseDTO(Integer id,
+                               Integer respostaNumero,
+                               String respostaTexto,
+                               Integer perguntaId) {
         this.id = id;
         this.respostaNumero = respostaNumero;
         this.respostaTexto = respostaTexto;
-        this.avaliacaoId = avaliacaoId;
         this.perguntaId = perguntaId;
     }
 
@@ -42,14 +43,6 @@ public class RespostaResponseDTO {
         this.respostaTexto = respostaTexto;
     }
 
-    public Integer getAvaliacaoId() {
-        return avaliacaoId;
-    }
-
-    public void setAvaliacaoId(Integer avaliacaoId) {
-        this.avaliacaoId = avaliacaoId;
-    }
-
     public Integer getPerguntaId() {
         return perguntaId;
     }
@@ -57,6 +50,5 @@ public class RespostaResponseDTO {
     public void setPerguntaId(Integer perguntaId) {
         this.perguntaId = perguntaId;
     }
-
 }
 

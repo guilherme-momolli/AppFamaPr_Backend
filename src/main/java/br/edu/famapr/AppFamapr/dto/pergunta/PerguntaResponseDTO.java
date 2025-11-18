@@ -1,17 +1,36 @@
 package br.edu.famapr.AppFamapr.dto.pergunta;
 
+import br.edu.famapr.AppFamapr.dto.resposta.RespostaResponseDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PerguntaResponseDTO {
 
     private Integer id;
     private String titulo;
-    private Integer disciplinaId;
+    private Integer avaliacaoId;
+    private List<RespostaResponseDTO> respostaResponseDTOSList = new ArrayList<>();
 
     public PerguntaResponseDTO() {}
 
-    public PerguntaResponseDTO(Integer id, String titulo, Integer disciplinaId) {
+    public PerguntaResponseDTO(Integer id,
+                               String titulo,
+                               Integer avaliacaoId,
+                               List<RespostaResponseDTO> respostaResponseDTOSList
+    ) {
         this.id = id;
         this.titulo = titulo;
-        this.disciplinaId = disciplinaId;
+        this.avaliacaoId = avaliacaoId;
+        this.respostaResponseDTOSList = respostaResponseDTOSList;
+    }
+
+    public List<RespostaResponseDTO> getRespostaResponseDTOSList() {
+        return respostaResponseDTOSList;
+    }
+
+    public void setRespostaResponseDTOSList(List<RespostaResponseDTO> respostaResponseDTOSList) {
+        this.respostaResponseDTOSList = respostaResponseDTOSList;
     }
 
     public Integer getId() {
@@ -30,11 +49,11 @@ public class PerguntaResponseDTO {
         this.titulo = titulo;
     }
 
-    public Integer getDisciplinaId() {
-        return disciplinaId;
+    public Integer getAvaliacaoId() {
+        return avaliacaoId;
     }
 
-    public void setDisciplinaId(Integer disciplinaId) {
-        this.disciplinaId = disciplinaId;
+    public void setAvaliacaoId(Integer avaliacaoId) {
+        this.avaliacaoId = avaliacaoId;
     }
 }

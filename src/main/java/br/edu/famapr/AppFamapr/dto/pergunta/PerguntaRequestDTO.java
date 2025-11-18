@@ -3,13 +3,13 @@ package br.edu.famapr.AppFamapr.dto.pergunta;
 public class PerguntaRequestDTO {
 
     private String titulo;
-    private Integer disciplinaId;
+    private Integer avaliacaoId;
 
     public PerguntaRequestDTO() {}
 
-    public PerguntaRequestDTO(String titulo, Integer disciplinaId) {
+    public PerguntaRequestDTO(String titulo, Integer avaliacaoId) {
         this.titulo = titulo;
-        this.disciplinaId = disciplinaId;
+        this.avaliacaoId = avaliacaoId;
     }
 
     public String getTitulo() {
@@ -20,11 +20,11 @@ public class PerguntaRequestDTO {
         this.titulo = titulo;
     }
 
-    public Integer getDisciplinaId() {
-        return disciplinaId;
+    public Integer getAvaliacaoId() {
+        return avaliacaoId;
     }
 
-    public void setDisciplinaId(Integer disciplinaId) {
-        this.disciplinaId = disciplinaId;
+    public void setAvaliacaoId(Integer avaliacaoId) {
+        this.avaliacaoId = avaliacaoId;
     }
 }

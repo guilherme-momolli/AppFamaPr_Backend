@@ -2,8 +2,6 @@ package br.edu.famapr.AppFamapr.dto.aluno;
 
 import java.time.LocalDate;
 
-import java.time.LocalDate;
-
 public class AlunoRequestDTO {
     private String nome;
     private String cpf;
@@ -13,7 +11,18 @@ public class AlunoRequestDTO {
     private String telefone;
     private String email;
 
-    public AlunoRequestDTO(String nome, String cpf, String senha, String sexo, LocalDate datanasc, String telefone, String email) {
+    public AlunoRequestDTO() {
+    }
+
+    public AlunoRequestDTO(
+            String nome,
+            String cpf,
+            String senha,
+            String sexo,
+            LocalDate datanasc,
+            String telefone,
+            String email
+    ) {
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
@@ -21,9 +30,6 @@ public class AlunoRequestDTO {
         this.datanasc = datanasc;
         this.telefone = telefone;
         this.email = email;
-    }
-
-    public AlunoRequestDTO() {
     }
 
     public String getNome() { return nome; }

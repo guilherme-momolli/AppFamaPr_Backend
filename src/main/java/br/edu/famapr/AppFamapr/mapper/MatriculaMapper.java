@@ -27,7 +27,7 @@ public class MatriculaMapper {
         dto.setStatus(matricula.getStatus());
         dto.setDatavigencia(matricula.getDatavigencia());
         dto.setAlunoNome(matricula.getAluno() != null ? matricula.getAluno().getNome() : null);
-        dto.setDisciplinaNome(matricula.getDisciplina() != null ? matricula.getDisciplina().getNome() : null);
+        dto.setDisciplinaId(matricula.getDisciplina() != null ? matricula.getDisciplina().getId(): null);
         return dto;
     }
 }

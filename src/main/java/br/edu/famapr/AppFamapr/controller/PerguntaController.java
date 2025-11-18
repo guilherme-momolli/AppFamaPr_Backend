@@ -9,47 +9,43 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/perguntas")
-@CrossOrigin(origins = "*")
-public class PerguntaController {
-
-    private final PerguntaService perguntaService;
-
-    public PerguntaController(PerguntaService perguntaService) {
-        this.perguntaService = perguntaService;
-    }
-
-    @GetMapping("/list")
-    public ResponseEntity<List<PerguntaResponseDTO>> findAll() {
-        return ResponseEntity.ok(perguntaService.findAll());
-    }
-
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<PerguntaResponseDTO> findById(@PathVariable Integer id) {
-        return perguntaService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<PerguntaResponseDTO> create(@RequestBody PerguntaRequestDTO dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(perguntaService.create(dto));
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<PerguntaResponseDTO> update(@PathVariable Integer id,
-                                                      @RequestBody PerguntaRequestDTO dto) {
-        return perguntaService.update(id, dto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (perguntaService.delete(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
-    }
-}
+//@RestController
+//@RequestMapping("/api/perguntas")
+//@CrossOrigin(origins = "*")
+//public class PerguntaController {
+//
+//    private final PerguntaService perguntaService;
+//
+//    public PerguntaController(PerguntaService perguntaService) {
+//        this.perguntaService = perguntaService;
+//    }
+//
+//    @GetMapping("/list")
+//    public ResponseEntity<List<PerguntaResponseDTO>> findAll() {
+//        return ResponseEntity.ok(perguntaService.findAll());
+//    }
+//
+//    @GetMapping("/findById/{id}")
+//    public ResponseEntity<PerguntaResponseDTO> findById(@PathVariable Integer id) {
+//        return ResponseEntity.ok(perguntaService.findById(id));
+//    }
+//
+//    @PostMapping("/create")
+//    public ResponseEntity<PerguntaResponseDTO> create(@RequestBody PerguntaRequestDTO dto) {
+//        PerguntaResponseDTO response = perguntaService.create(dto);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<PerguntaResponseDTO> update(@PathVariable Integer id,
+//                                                      @RequestBody PerguntaRequestDTO dto) {
+//        PerguntaResponseDTO responseDTO = perguntaService.update(id, dto);
+//        return ResponseEntity.ok(responseDTO);
+//    }
+//
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+//        perguntaService.delete(id);
+//        return ResponseEntity.noContent().build();
+//    }
+//}
